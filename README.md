@@ -25,11 +25,11 @@ rainfall_measurement/
 ---
 ## 🚀 快速開始
 
-### 1️⃣ 建立並啟用虛擬環境
+### 1️⃣ 建立並啟用虛擬環境 For Windows (CMD)
 
 ```bash
 python -m venv venv
-source venv/Scripts/activate  
+venv/Scripts/activate  
 ```
 
 ### 2️⃣ 安裝後端依賴套件
