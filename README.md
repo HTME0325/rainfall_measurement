@@ -29,7 +29,7 @@ rainfall_measurement/
 
 ```bash
 python -m venv venv
-source venv/bin/activate  
+source venv/Scripts/activate  
 ```
 
 ### 2️⃣ 安裝後端依賴套件
