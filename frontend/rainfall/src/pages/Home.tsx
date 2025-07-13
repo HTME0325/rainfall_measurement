@@ -75,7 +75,7 @@ export default function Home() {
 
     return (
         <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">全台降雨資料查詢</h1>
+            <h1 className="text-2xl font-bold mb-4">歷史雨量資料</h1>
 
             <div className="mb-6">
                 <label className="font-medium mr-2">選擇日期：</label>
@@ -145,7 +145,10 @@ export default function Home() {
                     )}
                     <select
                         value={sortOrder}
-                        onChange={(e) => setSortOrder(e.target.value as any)}
+                        onChange={(e) => {
+                            setSortOrder(e.target.value as any);
+                            setPrecipSort(null);
+                        }}
                         className="border px-3 py-2 rounded w-full sm:w-auto dark:bg-gray-900"
                     >
                         <option value="northToSouth">由北到南</option>
@@ -186,7 +189,9 @@ export default function Home() {
                         ))}
                     </div>
                 </div>
-                <div className="w-full lg:w-[400px] xl:w-[500px]">
+                <div
+                    className="w-full lg:w-[400px] xl:w-[500px] sticky top-4 self-start"
+                >
                     <h2 className="text-xl font-semibold mb-2">地圖視覺化</h2>
                     <RainMap locations={locations} selected={highlightedLocation} />
                 </div>
