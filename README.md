@@ -5,7 +5,7 @@
 ---
 
 ## 📁 專案結構
-
+```
 rainfall_measurement/
 ├── backend/ # FastAPI 後端應用
 │ ├── main.py # 主應用，掛載 API 與前端靜態頁面
@@ -21,7 +21,7 @@ rainfall_measurement/
 │ └── dist/ # 前端 build 後的靜態頁面
 ├── venv/ # Python 虛擬環境
 └── README.md # 使用說明
-
+```
 ---
 ## 🚀 快速開始
 
@@ -45,8 +45,13 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
+### 🔐 .env 設定
+你需要建立一個 .env 檔案在 backend/，內容如下：
+```env
+CWA_API_KEY=你的中央氣象局金鑰
+```
 
-
+---
 ## 🔹 API 路徑
 ```bash
 GET /api/weather/data?date=YYYY-MM-DD
@@ -83,10 +88,4 @@ GET /api/weather/data?date=YYYY-MM-DD
     ...
   ]
 }
-```
-
-## 🔐 .env 設定
-你需要建立一個 .env 檔案在 backend/，內容如下：
-```env
-CWA_API_KEY=你的中央氣象局金鑰
 ```
