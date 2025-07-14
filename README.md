@@ -3,7 +3,13 @@
 這是一個歷史雨量資料查詢應用，前端使用 **React + Vite + Tailwind CSS**，後端使用 **FastAPI**，以現代化技術堆疊實作前後端分離。
 
 ---
+## 環境需求
+- Python 3.12.4
+- 建議使用 `venv` 建立虛擬環境
+- 作業系統：Windows 11
+- 本專案在 Windows 11 上開發與測試，理論上支援其他平台，但可能需要調整啟動方式（如 shell 指令）。
 
+---
 ## 📁 專案結構
 
 ```
@@ -27,7 +33,7 @@ rainfall_measurement/
 ---
 ## 🚀 快速開始
 
-### 1️⃣ 建立並啟用虛擬環境
+### 1️⃣ 建立並啟用虛擬環境 (For Windows)
 
 ```bash
 python -m venv venv
