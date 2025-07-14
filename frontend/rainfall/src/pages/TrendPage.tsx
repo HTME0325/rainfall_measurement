@@ -128,6 +128,7 @@ export default function TrendPage() {
                             <YAxis stroke="#4b5563" unit=" mm" />
                             <Tooltip
                                 contentStyle={{ backgroundColor: "#ffffff", borderColor: "#d1d5db" }}
+                                labelStyle={{ color: "#374151" }}
                                 labelFormatter={(label) => `日期：${label}`}
                                 formatter={(value) => [`${value} mm`, "雨量"]}
                             />
