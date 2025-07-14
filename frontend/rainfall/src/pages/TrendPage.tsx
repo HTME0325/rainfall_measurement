@@ -34,6 +34,18 @@ export default function TrendPage() {
         }
     };
 
+    const handleFetchWithDates = async (start: string, end: string) => {
+        setLoading(true);
+        setError("");
+        try {
+            const json = await fetchTrend(station, start, end);
+            setData(json.data || []);
+        } catch (err) {
+            setError("載入失敗，請稍後再試");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="p-4 space-y-4">
@@ -67,50 +79,68 @@ export default function TrendPage() {
                     <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="border p-1 rounded" />
                 </div>
 
+                <button onClick={handleFetch} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    查詢
+                </button>
+
                 {/* 快速按鈕 */}
                 <div className="flex gap-2">
-                    <button onClick={() => {
-                        setStartDate(getDateStr(7));
-                        setEndDate(getDateStr(0));
-                    }} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700">
+                    <button
+                        onClick={() => {
+                            const start = getDateStr(7);
+                            const end = getDateStr(0);
+                            setStartDate(start);
+                            setEndDate(end);
+                            handleFetchWithDates(start, end);
+                        }}
+                        className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white font-semibold rounded border border-gray-300 dark:border-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
+
+                    >
                         近一週
                     </button>
-                    <button onClick={() => {
-                        setStartDate(getDateStr(30));
-                        setEndDate(getDateStr(0));
-                    }} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700">
+
+                    <button
+                        onClick={() => {
+                            const start = getDateStr(30);
+                            const end = getDateStr(0);
+                            setStartDate(start);
+                            setEndDate(end);
+                            handleFetchWithDates(start, end);
+                        }}
+                        className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white font-semibold rounded border border-gray-300 dark:border-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600"
+
+                    >
                         近一個月
                     </button>
                 </div>
 
-                <button onClick={handleFetch} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                    查詢
-                </button>
             </div>
 
             {loading && <p>載入中...</p>}
             {error && <p className="text-red-600">{error}</p>}
 
             {data.length > 0 && (
-                <ResponsiveContainer width="100%" height={400}>
-                    <LineChart data={data}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                        <XAxis dataKey="date" stroke="#4b5563" />
-                        <YAxis stroke="#4b5563" unit=" mm" />
-                        <Tooltip
-                            contentStyle={{ backgroundColor: "#ffffff", borderColor: "#d1d5db" }}
-                            labelFormatter={(label) => `日期：${label}`}
-                            formatter={(value) => [`${value} mm`, "雨量"]}
-                        />
-                        <Line
-                            type="monotone"
-                            dataKey="rainfall"
-                            stroke="#3b82f6"
-                            strokeWidth={2}
-                            dot={{ r: 3, stroke: "#3b82f6", fill: "#ffffff", strokeWidth: 2 }}
-                        />
-                    </LineChart>
-                </ResponsiveContainer>
+                <div className="mt-6">
+                    <ResponsiveContainer width="100%" height={400}>
+                        <LineChart data={data}>
+                            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                            <XAxis dataKey="date" stroke="#4b5563" />
+                            <YAxis stroke="#4b5563" unit=" mm" />
+                            <Tooltip
+                                contentStyle={{ backgroundColor: "#ffffff", borderColor: "#d1d5db" }}
+                                labelFormatter={(label) => `日期：${label}`}
+                                formatter={(value) => [`${value} mm`, "雨量"]}
+                            />
+                            <Line
+                                type="monotone"
+                                dataKey="rainfall"
+                                stroke="#3b82f6"
+                                strokeWidth={2}
+                                dot={{ r: 3, stroke: "#3b82f6", fill: "#ffffff", strokeWidth: 2 }}
+                            />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </div>
             )}
         </div>
     );
