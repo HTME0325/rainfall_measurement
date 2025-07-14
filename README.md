@@ -14,20 +14,21 @@
 
 ```
 rainfall_measurement/
-├── backend/ # FastAPI 後端應用
-│ ├── main.py # 主應用，掛載 API 與前端靜態頁面
-│ ├── routers/
-│ │ └── weather.py # 路由定義：處理 /api/weather/data
-│ ├── services/
-│ │ └── weather_service.py # 商業邏輯層，調用 utils 並處理回傳資料
-│ ├── utils/
-│ │ └── cwa_client.py # 中央氣象局 API 請求與資料解析
-│ └── .env # 儲存氣象 API 金鑰（已列入 .gitignore）
-├── frontend/ # 前端專案（Vite）
-│ ├── rainfall/ # 前端開發原始碼
-│ └── dist/ # 前端 build 後的靜態頁面
-├── venv/ # Python 虛擬環境
-└── README.md # 使用說明
+├── backend/                     # FastAPI 後端應用
+│   ├── main.py                 # 主應用，掛載 API 與前端靜態頁面
+│   ├── routers/
+│   │   └── weather.py          # 路由定義：處理 /api/weather/data
+│   ├── services/
+│   │   └── weather_service.py  # 商業邏輯層，調用 utils 並處理回傳資料
+│   ├── utils/
+│   │   ├── cwa_client.py       # 中央氣象局 API 請求與資料解析
+│   │   └── station_filter.py   # 用來過濾汰換或無效觀測站的工具模組
+│   └── .env                    # 儲存氣象 API 金鑰（已列入 .gitignore）
+├── frontend/                   # 前端專案（Vite）
+│   ├── rainfall/              # 前端開發原始碼
+│   └── dist/                  # 前端 build 後的靜態頁面
+├── venv/                      # Python 虛擬環境
+└── README.md                  # 使用說明
 ```
 
 ---
