@@ -3,6 +3,7 @@ from fastapi import HTTPException
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+from utils.station_filter import is_valid_station  
 
 load_dotenv()
 CWA_BASE_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/C-B0025-001"
@@ -19,7 +20,6 @@ def fetch_weather_data(date: str):
         res = requests.get(url, timeout=10)
         res.raise_for_status()
         data = res.json()
-
         if not data.get("records") or "location" not in data["records"]:
             raise HTTPException(status_code=404, detail="No records found")
 
@@ -43,10 +43,16 @@ def parse_weather_data(records: dict, target_date: str):
             continue
 
         location_name = station.get("StationName", "Unknown")
+        station_id = station.get("StationID", "")
         date = matched_obs.get("Date")
         elements = matched_obs.get("weatherElements", {})
 
-        item = {"locationName": location_name, "date": date}
+        item = {
+            "stationId": station_id,
+            "locationName": location_name,
+            "date": date,
+        }
+
         for key, val in elements.items():
             try:
                 item[key] = float(val)
@@ -56,7 +62,6 @@ def parse_weather_data(records: dict, target_date: str):
         result.append(item)
 
     return result
-
 
 # 抓取多日資料
 def fetch_weather_range_data(start_date: str, end_date: str, station_name: str = None):
@@ -83,7 +88,14 @@ def parse_station_trend_data(records: dict, target_station: str, start: str = No
 
     for loc in records.get("location", []):
         station = loc.get("station")
-        if not station or station.get("StationName") != target_station:
+        if not station:
+            continue
+
+        station_name = station.get("StationName")
+        station_id = station.get("StationID") or station.get("StationId")
+
+        # ✅ 比對名稱 + 排除汰換觀測站
+        if station_name != target_station or not is_valid_station(station_id):
             continue
 
         obs_times = loc.get("stationObsTimes", {}).get("stationObsTime", [])
@@ -108,5 +120,5 @@ def parse_station_trend_data(records: dict, target_station: str, start: str = No
 
         return sorted(result, key=lambda x: x["date"])
 
-    raise HTTPException(status_code=404, detail=f"Station '{target_station}' not found")
+    raise HTTPException(status_code=404, detail=f"Station '{target_station}' not found or is excluded.")
 
