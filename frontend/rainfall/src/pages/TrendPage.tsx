@@ -72,13 +72,13 @@ export default function TrendPage() {
                     <button onClick={() => {
                         setStartDate(getDateStr(7));
                         setEndDate(getDateStr(0));
-                    }} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                    }} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700">
                         近一週
                     </button>
                     <button onClick={() => {
                         setStartDate(getDateStr(30));
                         setEndDate(getDateStr(0));
-                    }} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300">
+                    }} className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700">
                         近一個月
                     </button>
                 </div>
