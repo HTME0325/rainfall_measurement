@@ -6,6 +6,7 @@ const menuItems = [
         label: '雨量查詢',
         children: [
             { label: '🌧️ 歷史雨量資料', path: '/home' },
+            { label: '📈 雨量折線圖', path: '/trend' },
         ],
     },
 ];
